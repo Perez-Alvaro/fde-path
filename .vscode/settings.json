@@ -1,0 +1,28 @@
+{
+  // Intérprete Python del entorno virtual local (Windows)
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "python.terminal.activateEnvironment": true,
+
+  // Testing con pytest
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": [
+    "practice"
+  ],
+
+  // Formateo y linting limpio
+  "editor.formatOnSave": true,
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // ===========================================================================
+  // Práctica manual sin asistencia de IA (Inline Suggestions)
+  // Descomentá o cambiá a false cuando quieras practicar código 100% a mano.
+  // ===========================================================================
+  "editor.inlineSuggest.enabled": false,
+  "github.copilot.enable": {
+    "*": false
+  }
+}

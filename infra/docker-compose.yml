@@ -1,0 +1,48 @@
+# ==============================================================================
+# Infraestructura local - PostgreSQL (y base comentada para Odoo)
+# Uso:
+#   docker compose --env-file ../.env -f infra/docker-compose.yml up -d
+# ==============================================================================
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: fde_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-fde_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me_local_password}
+      POSTGRES_DB: ${POSTGRES_DB:-fde_local}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-fde_user} -d ${POSTGRES_DB:-fde_local}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================================
+  # Sección base para Odoo + PostgreSQL (Bootcamp / Fase futura)
+  # Descomentar cuando comience el módulo de Odoo.
+  # ============================================================================
+  # odoo:
+  #   image: odoo:17.0
+  #   container_name: fde_odoo
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   ports:
+  #     - "${ODOO_PORT:-8069}:8069"
+  #   environment:
+  #     HOST: postgres
+  #     USER: ${POSTGRES_USER:-fde_user}
+  #     PASSWORD: ${POSTGRES_PASSWORD:-change_me_local_password}
+  #   volumes:
+  #     - odoo-web-data:/var/lib/odoo
+  #     # - ./addons:/mnt/extra-addons
+
+volumes:
+  pgdata:
+  # odoo-web-data:
